@@ -1,3 +1,5 @@
+import { waitUntilDisplayed } from "../utils"
+
 class Inventory {
 	// container
 	static inventoryListContainer = 'div[data-test="inventory-list"]'
@@ -6,6 +8,8 @@ class Inventory {
 
 	static async verifyInventoryElements() {
 		let inventoryList = await $(this.inventoryListContainer)
+		waitUntilDisplayed(this.inventoryListContainer)
+
 		let randomListItem = await this.getRandomInventoryItem()
 
 		await expect.soft(inventoryList).toBeDisplayedInViewport()
