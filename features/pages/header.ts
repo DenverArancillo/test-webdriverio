@@ -7,8 +7,8 @@ class Header {
 	static shoppingCart = '#shopping_cart_container'
 	static burgerMenu = 'div.bm-burger-button'
 
-	static async verifyHeaderElements() {
-		let headerTitle = await withinFindByText(this.secondaryHeaderContainer, 'Products')
+	static async verifyHeaderTextAndElements(headerText: string | RegExp) {
+		let headerTitle = await withinFindByText(this.secondaryHeaderContainer, headerText)
 		let shoppingCart = await $(this.shoppingCart)
 		let burgerMenu = await $(this.burgerMenu)
 
