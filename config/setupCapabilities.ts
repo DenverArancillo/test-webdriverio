@@ -3,6 +3,9 @@ import getProcessEnv from "./getProcessEnv"
 const setupCapabilities = () => {
 	const isMobile = getProcessEnv('IS_MOBILE')
 	const browserName = getProcessEnv('BROWSER')
+	const isHeadless = getProcessEnv('HEADLESS')
+
+	let args: Array<string> = (isHeadless === 'true') ? ['headless'] : []
 
 	let capabilities = []
 	if (isMobile === 'true') {
@@ -11,7 +14,11 @@ const setupCapabilities = () => {
 		const multiDevices = getProcessEnv('MULTI_DEVICES')
 
 		if (isMultiDevices === 'false') {
-			return [{ browserName, 'custom:caps': { device: deviceName } }]
+			return [{ 
+				browserName, 
+				'custom:caps': { device: deviceName },
+				'goog:chromeOptions': { args }
+			}]
 		}
 
 		if (
@@ -22,7 +29,8 @@ const setupCapabilities = () => {
 			for (let device of multiDevices.split(',')) {
 				capabilities.push({
 					browserName: process.env.BROWSER,
-					'custom:caps': { device }
+					'custom:caps': { device },
+					'goog:chromeOptions': { args }
 				})
 			}
 		}
@@ -33,13 +41,17 @@ const setupCapabilities = () => {
 		const multiBrowsers = getProcessEnv('MULTI_BROWSERS')
 
 		if (isMultiBrowser === 'false') {
-			return [{ browserName }]
+			return [{ 
+				browserName,
+				'goog:chromeOptions': { args }
+			}]
 		}
 
 		if (isMultiBrowser === 'true' && multiBrowsers.length > 0) {
 			for (let browser of multiBrowsers.split(',')) {
 				capabilities.push({
-					browserName: browser
+					browserName: browser,
+					'goog:chromeOptions': { args }
 				})
 			}
 		}
