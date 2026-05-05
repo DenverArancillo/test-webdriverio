@@ -2,6 +2,6 @@ allure-results
 allure-report
 logs
 node_modules
-screenshots
+results/*
 
 .env
