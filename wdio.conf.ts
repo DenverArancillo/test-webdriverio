@@ -143,7 +143,23 @@ export const config: WebdriverIO.Config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec',['allure', { outputDir: 'allure-results' }]],
+    reporters: [
+        'spec',
+        ['allure', { 
+                outputDir: 'allure-results', 
+                disableWebdriverStepsReporting: true, 
+                disableWebdriverScreenshotsReporting: true,
+                useCucumberStepReporter: true
+            }
+        ],
+        ['video', { 
+                saveAllVideos: false, 
+                videoSlowdownMultiplier: 3,
+                outputDir: 'results/video',
+                videoFormat: 'mp4'
+            }
+        ]
+    ],
 
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
